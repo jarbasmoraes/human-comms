@@ -1,5 +1,7 @@
 # human-comms
 
+[![skills.sh](https://skills.sh/b/jarbasmoraes/human-comms)](https://skills.sh/jarbasmoraes/human-comms)
+
 An agent skill that makes AI-written messages readable in 15 seconds.
 
 Coding agents write good code and bad updates. Left alone, they narrate the
@@ -31,7 +33,18 @@ nobody replies.
 
 ## Install
 
-Clone into your agent's skills directory.
+With the [skills](https://github.com/vercel-labs/skills) CLI, which detects your
+agent and puts the files in the right place:
+
+```bash
+npx skills add jarbasmoraes/human-comms
+```
+
+Add `-g` to install globally instead of into the current project.
+
+### Manual
+
+Or clone into your agent's skills directory.
 
 **Claude Code (all projects):**
 
@@ -102,4 +115,4 @@ Markdown instructions. Works with Claude Code, Pi, and any agent that reads
 
 ## License
 
-MIT.
+MIT. See [`LICENSE`](./LICENSE).
