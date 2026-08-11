@@ -1,0 +1,89 @@
+name: release
+
+# Fully automatic: every push to main computes the next semver from
+# conventional commits, stamps SKILL.md, tags, and publishes a Release.
+# No release PR, no manual step.
+#
+# Bump rules (conventional commits since the last tag):
+#   feat!: / BREAKING CHANGE  -> major
+#   feat:                     -> minor
+#   anything else             -> patch
+#
+# The version-stamp commit is pushed with the default GITHUB_TOKEN, which
+# does not trigger workflows, so this cannot loop. The `if` guard is a
+# second line of defense.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute next version
+        id: ver
+        run: |
+          set -euo pipefail
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          COMMITS=$(git log "${LAST_TAG}..HEAD" --pretty=%s 2>/dev/null || git log --pretty=%s)
+          if [ -z "$COMMITS" ]; then
+            echo "No commits since ${LAST_TAG}; skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          BODIES=$(git log "${LAST_TAG}..HEAD" --pretty=%B 2>/dev/null || true)
+          if echo "$COMMITS" | grep -qE '^[a-z]+(\([^)]*\))?!:' || echo "$BODIES" | grep -q 'BREAKING CHANGE'; then
+            BUMP=major
+          elif echo "$COMMITS" | grep -qE '^feat(\([^)]*\))?:'; then
+            BUMP=minor
+          else
+            BUMP=patch
+          fi
+          V=${LAST_TAG#v}
+          IFS=. read -r MA MI PA <<< "$V"
+          case "$BUMP" in
+            major) MA=$((MA+1)); MI=0; PA=0 ;;
+            minor) MI=$((MI+1)); PA=0 ;;
+            patch) PA=$((PA+1)) ;;
+          esac
+          NEXT="${MA}.${MI}.${PA}"
+          echo "Last: ${LAST_TAG}  Bump: ${BUMP}  Next: v${NEXT}"
+          {
+            echo "skip=false"
+            echo "next=${NEXT}"
+            echo "tag=v${NEXT}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Stamp version, tag, and push
+        if: steps.ver.outputs.skip == 'false'
+        run: |
+          set -euo pipefail
+          NEXT="${{ steps.ver.outputs.next }}"
+          TAG="${{ steps.ver.outputs.tag }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          sed -i "s/^version: .*/version: ${NEXT}/" SKILL.md
+          git add SKILL.md
+          git commit -m "chore(release): ${TAG}"
+          git tag "$TAG"
+          git push origin main --follow-tags
+
+      - name: Publish GitHub Release
+        if: steps.ver.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.ver.outputs.tag }}" --generate-notes
