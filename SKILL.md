@@ -34,8 +34,16 @@ late, or wrong, or not at all.
    than one fact (steps completed, findings, remaining issues), use short
    bullet points, one fact per bullet. Bullets are easier to scan on a phone
    than a paragraph. Keep each bullet to one line where possible. Two to
-   five bullets is the sweet spot; if you have more, you are probably
-   including things the reader doesn't need.
+   five bullets is the default for a routine update; before adding a sixth,
+   check that each bullet carries a fact the reader needs. Cut bullets the
+   reader doesn't need, never facts they do.
+   When the material genuinely holds more facts than that (a large
+   investigation, a multi-part migration, a day of parallel work), do not
+   flatten it into one long list and do not drop facts to fit. Group the
+   bullets under short bold labels (**Fixed:**, **Still open:**,
+   **Decisions needed:**). The skim still works: bottom line plus group
+   labels tell the state, and the reader drills into the group that
+   concerns them.
 3. **If asking something:** present the options as bullets, one line each,
    with the practical tradeoff in plain terms. State which one you recommend
    and why in one sentence. State what you will do by default if there is
@@ -78,6 +86,14 @@ enemy, and every word that serves no function must go.
 
   **Question:** ...
   **Blocked on:** ...
+- Facts survive verbatim. Plain language never alters the facts the
+  reader must act on: every command, path, number, URL, date, and name
+  the reader needs stays exactly as it is. Simplify the explanation
+  around the facts, never the facts themselves. "Run `git pull --rebase
+  origin main`" must not become "pull the latest changes".
+- Write in the reader's language. If the conversation is in Portuguese,
+  the update is in Portuguese. Do not switch to English because the code,
+  the logs, or your internal reasoning are in English.
 - Never state a fact you have not verified. Do not invent reassuring
   details ("no one was double-charged", "no data was lost") to soften a
   report. A false reassurance costs more trust than the bad news itself.
@@ -87,10 +103,16 @@ enemy, and every word that serves no function must go.
 ## Length and depth
 
 - Default to short. A status update is 3-6 lines (bullets count as lines);
-  a question is under 10. As a hard budget: status updates under 100 words,
-  questions and error reports under 150. When your draft runs over, cut
-  context before you cut the bottom line, the labeled question, or the
-  default action.
+  a question is under 10. As a budget for routine messages: status updates
+  under 100 words, questions and error reports under 150. When your draft
+  runs over, cut context before you cut the bottom line, the labeled
+  question, or the default action.
+- Budgets bound clutter, not information. Simpler, not necessarily
+  shorter: if the content genuinely needs more space to be clear, take the
+  space. A large report may run long, but every extra line must carry a
+  fact the reader needs, grouped as described above, and the first five
+  lines must still work standalone. Length from padding is a failure;
+  length from facts is not.
 - Do not dump logs, diffs, or full explanations unprompted. They bury the
   bottom line and make the message feel like work to read. Instead, end
   with one line listing what deeper detail is available on request
@@ -102,8 +124,10 @@ enemy, and every word that serves no function must go.
 Reread the message as someone who just switched from a completely different
 task. In 15 seconds, can they tell (a) the state of things, (b) whether they
 need to act, and (c) exactly what to answer if so? If not, rewrite. Then do
-a Zinsser pass: count the words, cut a third, check for em-dashes and
-codenames, and make sure facts sit in bullets, not buried in prose. The most
+a Zinsser pass: cut every word that serves no function (in a padded draft
+that is often a third of them), check for em-dashes and codenames, and make
+sure facts sit in bullets, not buried in prose. Never cut a fact the reader
+needs to hit a length target; group facts under bold labels instead. The most
 common fixes: move the conclusion to the first sentence, turn the middle
 paragraph into 2-4 bullets, pull the question out into its own labeled line.
 

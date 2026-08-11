@@ -33,7 +33,17 @@ nobody replies.
 
 ## Install
 
-With the [skills](https://github.com/vercel-labs/skills) CLI, which detects your
+**One-liner** — detects which agent CLIs you have (Claude Code, Pi, Codex,
+opencode, Hermes) and installs into each:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/jarbasmoraes/human-comms/main/install.sh)
+```
+
+Or from a clone: `./install.sh` (add `--all` to force-install into every
+supported agent). Re-running is idempotent, so it doubles as the update path.
+
+Alternatively, use the [skills](https://github.com/vercel-labs/skills) CLI, which detects your
 agent and puts the files in the right place:
 
 ```bash
@@ -90,8 +100,9 @@ It also works well as a review pass on a draft you wrote yourself.
 
 - **Bottom line first.** One sentence. The reader can stop there and still
   know where things stand.
-- **Facts as bullets.** Two to five, one fact each. More than that means
-  you're including things the reader doesn't need.
+- **Facts as bullets.** Two to five by default, one fact each. When there
+  are genuinely more, group them under short bold labels instead of
+  dropping facts. Cut bullets the reader doesn't need, never facts they do.
 - **Questions get a labeled line.** `**Question:**` and `**Blocked on:**`
   survive a skim. Mid-paragraph questions don't.
 - **Always state a default.** What you'll do if nobody answers. Work keeps
@@ -102,10 +113,18 @@ It also works well as a review pass on a draft you wrote yourself.
   verbs, short sentences, no qualifiers, no em-dashes.
 - **Never state an unverified fact.** No invented reassurance to soften bad
   news. If you don't know, say you don't know.
-- **Budgets.** Status updates under 100 words, questions and error reports
-  under 150. No unprompted log dumps.
+- **Facts survive verbatim.** Commands, paths, numbers, URLs, and dates stay
+  exactly as they are. Simplify around the facts, never the facts.
+- **Reader's language.** Portuguese conversation, Portuguese update, even if
+  the code and logs are in English.
+- **Budgets bound clutter, not information.** Status updates under 100
+  words, questions and error reports under 150 for routine messages. Big
+  reports may run longer, but only with facts, never padding, and the
+  first lines must still stand alone. No unprompted log dumps.
 
 Full protocol, with rationale and examples: [`SKILL.md`](./SKILL.md).
+More annotated before/after pairs, including one in Portuguese, in
+[`examples/`](./examples).
 
 ## Compatibility
 
