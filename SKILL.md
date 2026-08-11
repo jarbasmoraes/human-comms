@@ -1,6 +1,6 @@
 ---
 name: human-comms
-version: 1.0.0
+version: 1.0.1
 description: >-
   Protocol for writing any message addressed to a human: status updates,
   progress reports, questions, error reports, blockers, and completion
