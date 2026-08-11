@@ -78,8 +78,11 @@ jobs:
           sed -i "s/^version: .*/version: ${NEXT}/" SKILL.md
           git add SKILL.md
           git commit -m "chore(release): ${TAG}"
-          git tag "$TAG"
-          git push origin main --follow-tags
+          git tag -a "$TAG" -m "Release ${TAG}"
+          # Push the branch and the tag explicitly; --follow-tags only
+          # pushes annotated tags and silently skipped a lightweight tag
+          # once, leaving the release step without a remote tag.
+          git push origin main "refs/tags/${TAG}"
 
       - name: Publish GitHub Release
         if: steps.ver.outputs.skip == 'false'
