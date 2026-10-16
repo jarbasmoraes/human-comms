@@ -1,6 +1,6 @@
 ---
 name: human-comms
-version: 1.0.2
+version: 1.1.0
 description: >-
   Write clear human-facing messages, durable reports, and evergreen notes.
   Use for status updates, questions, blockers, errors, completion summaries,
