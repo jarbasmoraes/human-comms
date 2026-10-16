@@ -1,7 +1,7 @@
 # Example: question with a blocker
 
 Demonstrates: **options as bullets with tradeoffs**, **labeled question
-line**, and **always state a default** — the work keeps moving even if the
+line**, and **state an authorized default when relevant** — the work keeps moving even if the
 reader is away for hours.
 
 ## Before
@@ -20,8 +20,8 @@ reader is away for hours.
 > The payment provider's test system is down, so I can't verify refunds end to end.
 >
 > Options:
-> - Ship now, verify refunds when their test system is back. Fastest, small risk a refund bug reaches users.
-> - Hold the release until I can verify. Safest, delays launch about a day.
+> - Ship now, verify refunds when their test system is back. Fastest, but refund behavior remains unverified.
+> - Hold the release until I can verify. Delays launch until verification is possible.
 >
 > I recommend holding, because refund bugs cost real money to unwind.
 >

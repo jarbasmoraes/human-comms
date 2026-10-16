@@ -32,7 +32,7 @@ things". The reader cannot act on any of it.*
 > - Old database: keep it for 30 days as a fallback, or drop it at cutover? I recommend 30 days, storage cost is about $40.
 > - Read-only mode during final cutover means roughly 10 minutes of downtime Friday. OK to schedule for 7am?
 >
-> Default if I don't hear back by Thursday: keep the old database 30 days and cut over Friday 7am.
+> Without approval, cutover remains pending. The old database stays in place.
 
 ## Why it works
 

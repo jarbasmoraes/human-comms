@@ -24,7 +24,7 @@ command and the number stay exact.
 > - Houve uma queda de conexão no meio, mas o script retomou sozinho e verifiquei que nenhuma linha foi duplicada.
 >
 > **Pergunta:** posso rodar em produção hoje à noite?
-> Se não tiver resposta até as 18h, deixo para amanhã de manhã.
+> Sem aprovação, a execução em produção permanece pendente.
 
 ## Why it works
 

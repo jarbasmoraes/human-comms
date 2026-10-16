@@ -2,34 +2,61 @@
 
 [![skills.sh](https://skills.sh/b/jarbasmoraes/human-comms)](https://skills.sh/jarbasmoraes/human-comms)
 
-An agent skill that makes AI-written messages readable in 15 seconds.
+An agent skill for clear messages, durable reports, and evergreen notes.
+Make the opening understandable in 15 seconds while preserving the context,
+evidence, and reasoning that future readers need.
 
-Coding agents write good code and bad updates. Left alone, they narrate the
-session chronologically, bury the question in the middle of a paragraph, and
-refer to things by class name. The human reading it has to reconstruct the
-whole session before they can answer. So they answer late, or wrong, or not
-at all.
+## The rules, in short
 
-This skill replaces that default with a protocol: bottom line first, facts as
-bullets, questions on their own labeled line, and a stated default action if
-nobody replies.
+- **Lead with the answer.** Make the opening understandable in 15 seconds:
+  what happened, why it matters, and whether the reader needs to act.
+- **Match the format to the purpose.** Keep operational updates brief. Give
+  durable reports context and evidence. Build evergreen notes around one
+  reusable idea, including when it applies and when it does not.
+- **Make facts easy to scan.** Use bullets for parallel items, numbered lists
+  for steps, tables for comparisons, and prose for connected explanations.
+  Group long lists instead of dropping important facts.
+- **Make questions and blockers visible.** Put them on their own labeled
+  line. Explain the options, practical trade-offs, and your recommendation.
+- **State authorized defaults.** When a reply is needed, explain what happens
+  without one. Silence never grants missing approval.
+- **Write plainly for the audience.** Use useful technical terms and preserve
+  identifiers needed to locate or reproduce the work. Explain unfamiliar terms.
+- **Write like Zinsser.** Cut filler and unnecessary repetition. Prefer active
+  verbs and specific words. Avoid flattery, slogans, and dash-heavy prose.
+- **Challenge assumptions with reasons.** Do not agree automatically. Explain
+  unsupported premises without manufacturing disagreement.
+- **Keep evidence and commitments distinct.** Separate verified facts, reports,
+  inferences, and unknowns. A proposal is not an approved decision, and planned
+  work is not completed work. Never invent reassurance or verification.
+- **Preserve actionable facts.** Commands, paths, URLs, names, dates, units,
+  and numerical values survive editing. Simplify around them.
+- **Use the reader's language.** A Portuguese conversation gets a Portuguese
+  update, even when the code and logs are in English.
+- **Make durable writing self-contained.** Include relevant dates, scope,
+  sources, reasoning, limits, and conditions for reconsideration. Never invent
+  missing dates or leave essential evidence only available on request.
+- **Maintain records according to their purpose.** Add dated corrections to
+  historical reports. Revise evergreen explanations as understanding improves,
+  keeping material changes traceable.
+- **Use references when they help.** Use F for findings, D for decisions, O for
+  options, R for risks, Q for questions, and A for actions. Keep IDs stable
+  within their scope. Skip them when simple prose is enough.
+- **Bound clutter, not information.** Aim for under 100 words for routine
+  status updates and under 150 for questions or error reports. Keep necessary
+  facts and evidence even when they require more space.
 
 ## What it changes
 
-**Before:**
+| Mode | Best for | Result |
+| --- | --- | --- |
+| Operational | Status, errors, questions, blockers | Outcome first, impact, clear next action |
+| Durable record | Investigations, handoffs, decisions | Dated context, evidence, rationale, review conditions |
+| Evergreen note | Reusable knowledge | One idea, mechanism, applicability, exceptions |
 
-> FileIngestGuard threw an UnhandledPromiseRejection in the S3 multipart flow
-> after the ETag mismatch retry loop exhausted, stack trace below (400 lines)...
-
-**After:**
-
-> File uploads over 100 MB are failing for users. Smaller uploads work.
->
-> - Started after yesterday's storage change: the step that verifies uploads now rejects large files.
-> - Fix is to roll back that change, about 30 minutes.
->
-> **Blocked on:** nothing. I'll roll back at 3pm unless you object.
-> Full error trace available on request.
+Use optional F/D/O/R/Q/A references when readers need to discuss or track items.
+Keep evidence status separate from action status. A recommendation is not an
+approved decision, and silence does not grant permission.
 
 ## Install
 
@@ -79,52 +106,22 @@ The directory name must be `human-comms` to match the `name` field in
 
 ## Use
 
-The skill triggers on its own. Its description tells the agent to load it
-before writing anything a person will read: progress reports, questions,
-error reports, blockers, completion summaries. You do not need to mention
-"communication" or "status update" by name.
+Ask your agent to apply the skill, or let it select the skill from its description.
+Automatic loading depends on your agent's skill support and configuration.
 
-To force it, ask directly:
+- "Use human-comms to summarize the migration status."
+- "Write a durable incident report using human-comms."
+- "Turn this lesson into an evergreen note using human-comms."
+- "Review this draft and add stable references for the decisions."
 
-```
-Use the human-comms skill to write the update.
-```
+The skill infers the mode from the destination and purpose. Simple responses
+stay simple. Technical terminology follows the audience, and material facts
+survive editing. Reports retain evidence; historical conclusions receive dated
+corrections. Evergreen explanations evolve as understanding improves.
 
-```
-Rewrite this message following human-comms.
-```
-
-It also works well as a review pass on a draft you wrote yourself.
-
-## The rules, in short
-
-- **Bottom line first.** One sentence. The reader can stop there and still
-  know where things stand.
-- **Facts as bullets.** Two to five by default, one fact each. When there
-  are genuinely more, group them under short bold labels instead of
-  dropping facts. Cut bullets the reader doesn't need, never facts they do.
-- **Questions get a labeled line.** `**Question:**` and `**Blocked on:**`
-  survive a skim. Mid-paragraph questions don't.
-- **Always state a default.** What you'll do if nobody answers. Work keeps
-  moving while the reader is away.
-- **Plain language.** No codenames, no jargon. Say "the step that validates
-  uploads", not `FileIngestGuard`.
-- **Write like Zinsser.** Cut every word that serves no function. Active
-  verbs, short sentences, no qualifiers, no em-dashes.
-- **Never state an unverified fact.** No invented reassurance to soften bad
-  news. If you don't know, say you don't know.
-- **Facts survive verbatim.** Commands, paths, numbers, URLs, and dates stay
-  exactly as they are. Simplify around the facts, never the facts.
-- **Reader's language.** Portuguese conversation, Portuguese update, even if
-  the code and logs are in English.
-- **Budgets bound clutter, not information.** Status updates under 100
-  words, questions and error reports under 150 for routine messages. Big
-  reports may run longer, but only with facts, never padding, and the
-  first lines must still stand alone. No unprompted log dumps.
-
-Full protocol, with rationale and examples: [`SKILL.md`](./SKILL.md).
-More annotated before/after pairs, including one in Portuguese, in
-[`examples/`](./examples).
+The core protocol is in [`SKILL.md`](./SKILL.md). Examples in [`examples/`](./examples)
+are loaded only when relevant. The shell installer copies both the core and examples.
+The existing release workflow manages the version field automatically.
 
 ## Compatibility
 
