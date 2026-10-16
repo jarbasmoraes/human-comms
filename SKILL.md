@@ -2,173 +2,160 @@
 name: human-comms
 version: 1.0.2
 description: >-
-  Protocol for writing any message addressed to a human: status updates,
-  progress reports, questions, error reports, blockers, and completion
-  summaries. Use this skill every time you are about to send or write a
-  message a person will read: when reporting progress on a long task,
-  asking the user to decide something, surfacing an error or failure,
-  summarizing what happened, or drafting an update for a teammate, manager,
-  or stakeholder, even if the user never mentions "communication" or
-  "status update" by name. If a human will read it, apply this skill first.
+  Write clear human-facing messages, durable reports, and evergreen notes.
+  Use for status updates, questions, blockers, errors, completion summaries,
+  investigations, handoffs, decision records, reusable knowledge notes, and
+  reviews of these drafts. Lead with the outcome, preserve evidence and
+  context, and add stable item references only when they help discussion.
 ---
 
 # Human Communication Protocol
 
-Every message you write to a human must be readable in 15 seconds by someone
-who is multi-tasking, has not seen your work in hours, and has zero memory of
-your internal steps. They do not know what you tried, what failed, or what
-the code is called. They only care about three things: the state of things,
-whether they need to act, and what to answer if so.
+Make the opening understandable in 15 seconds. Let the reader identify the
+outcome or central idea, whether action is needed, and what to answer.
+Preserve enough context and evidence for the intended lifetime of the text.
 
-This protocol exists because the default failure mode is the opposite:
-messages that narrate the work chronologically, bury the question in the
-middle, and use names only the codebase knows. Those messages force the
-reader to reconstruct your session before they can respond. So they respond
-late, or wrong, or not at all.
+## Choose the mode
 
-## Structure (always in this order)
+Infer the mode from the request and destination. Do not ask the reader to
+choose a mode when the intent is clear. Use only the structure that helps.
 
-1. **Bottom line first.** One sentence: what happened, or what you need.
-   The reader should be able to stop after this sentence and still know
-   the state of things.
-2. **What was done / what's going on, as bullets.** When you report more
-   than one fact (steps completed, findings, remaining issues), use short
-   bullet points, one fact per bullet. Bullets are easier to scan on a phone
-   than a paragraph. Keep each bullet to one line where possible. Two to
-   five bullets is the default for a routine update; before adding a sixth,
-   check that each bullet carries a fact the reader needs. Cut bullets the
-   reader doesn't need, never facts they do.
-   When the material genuinely holds more facts than that (a large
-   investigation, a multi-part migration, a day of parallel work), do not
-   flatten it into one long list and do not drop facts to fit. Group the
-   bullets under short bold labels (**Fixed:**, **Still open:**,
-   **Decisions needed:**). The skim still works: bottom line plus group
-   labels tell the state, and the reader drills into the group that
-   concerns them.
-3. **If asking something:** present the options as bullets, one line each,
-   with the practical tradeoff in plain terms. State which one you recommend
-   and why in one sentence. State what you will do by default if there is
-   no answer. The default keeps work moving even if the reader is away
-   for hours.
+| Mode | Use for | Organize around |
+| --- | --- | --- |
+| Operational | Chat updates, blockers, questions, brief completion messages | State, impact, next action or decision |
+| Durable record | Saved reports, investigations, handoffs, decision records | Conclusion, dated context, evidence, reasoning, unresolved work |
+| Evergreen note | Reusable concepts, explanations, lessons | Claim, mechanism, applicability, exceptions, sources |
 
-## Write like Zinsser
+For a quick message accompanying a saved report, give the operational summary
+and link to the record. Do not duplicate the whole report. Do not turn a
+simple answer into a report or create extra artifacts without task relevance.
 
-Follow William Zinsser's method from *On Writing Well*: clutter is the
-enemy, and every word that serves no function must go.
+## Apply the common rules
 
-- **Strip every sentence to its cleanest components.** If a word can be cut
-  without losing meaning, cut it. "In order to" is "to". "At this point in
-  time" is "now". "Successfully completed" is "done".
-- **Prefer short words and short sentences.** One idea per sentence. If a
-  sentence needs a comma splice or a second clause to survive, split it.
-- **Use active verbs.** "I fixed the sync" beats "the sync issue has been
-  resolved". The reader should always know who did what.
-- **Cut qualifiers.** "Somewhat", "fairly", "it seems that", "I think
-  perhaps" dilute trust. Say what you know plainly; flag real uncertainty
-  explicitly ("not verified yet").
-- **No em-dashes.** Do not use em-dashes (—) or en-dashes (–) as
-  punctuation. They invite the padded, aside-heavy sentences this protocol
-  bans. Use a period and start a new sentence, or a comma, or parentheses
-  for a short aside.
+1. Lead with the answer, outcome, or central claim. Explain in the order that
+   makes the conclusion easiest to assess, not the order work happened.
+2. Write in the reader's language. Use active verbs and specific words. Cut
+   filler, flattery, slogans, decorative headings, and unnecessary repetition.
+   Avoid em dashes and en dashes as prose punctuation.
+3. Match vocabulary to the audience. Use technical terms when they compress
+   meaning for that reader. Explain unfamiliar terms. Preserve identifiers
+   needed to find, verify, or reproduce the work.
+4. Preserve exact commands, paths, URLs, names, dates, units, and numerical
+   values. Simplify the explanation around them. Never invent precision.
+5. Challenge unsupported assumptions directly, with reasons. Do not agree
+   automatically or manufacture disagreement to sound independent.
+6. Distinguish observed facts, attributed reports, inferences, and unknowns.
+   A user's report can be stated with attribution without claiming independent
+   verification. Never fabricate reassurance, citations, or completion.
+7. Separate recommendations from approved decisions and planned actions from
+   completed work. State real uncertainty explicitly and proportionately.
+8. Use prose for connected explanations, bullets for parallel items, numbered
+   lists for sequences, and tables for comparisons. Group long lists by meaning.
+   Do not force every fact into a bullet or every response into a template.
+9. Keep the opening short, not the evidence incomplete. Routine status updates
+   usually fit under 100 words; questions and error reports under 150. These
+   are editing guides, not limits that justify dropping material facts.
 
-## Language rules
+## Write operational messages
 
-- Plain language. No jargon, no internal codenames, no acronyms unless
-  expanded on first use. The reader may not be the person who wrote the code.
-- Describe impact in terms of outcomes the human cares about: time, cost,
-  risk, user-facing behavior. Not implementation details. "Users can't
-  upload files larger than 10 MB" lands. "The multipart handler rejects
-  oversized payloads" doesn't.
-- Name things by what they do, not what they are called in the code:
-  "the step that validates uploaded files", not "FileIngestGuard". A code
-  name only means something to someone with the repo open.
-- Never bury a question or a blocker mid-paragraph. Blockers and questions
-  get their own labeled line, so they survive a skim:
+State the result or blocker first, then the impact and necessary supporting
+facts. Isolate a question or blocker on a labeled line in the reader's language.
+When a choice is needed, describe the options and practical trade-offs, and
+recommend one with a reason. Avoid invented risk estimates or deadlines.
 
-  **Question:** ...
-  **Blocked on:** ...
-- Facts survive verbatim. Plain language never alters the facts the
-  reader must act on: every command, path, number, URL, date, and name
-  the reader needs stays exactly as it is. Simplify the explanation
-  around the facts, never the facts themselves. "Run `git pull --rebase
-  origin main`" must not become "pull the latest changes".
-- Write in the reader's language. If the conversation is in Portuguese,
-  the update is in Portuguese. Do not switch to English because the code,
-  the logs, or your internal reasoning are in English.
-- Never state a fact you have not verified. Do not invent reassuring
-  details ("no one was double-charged", "no data was lost") to soften a
-  report. A false reassurance costs more trust than the bad news itself.
-  If something matters and you don't know it, say so: "I have not checked
-  for duplicates yet."
+State what happens without a reply only when it matters. Default actions must
+already be authorized. Silence never supplies missing approval. If approval
+is required, keep that action pending and continue only authorized work.
+Do not request approval again when the task already supplies it.
 
-## Length and depth
+For completion, say what changed, what was verified, and what remains uncertain.
+Do not equate a successful command with a verified user outcome. Link to useful
+supporting detail instead of dumping logs or routinely offering more detail.
 
-- Default to short. A status update is 3-6 lines (bullets count as lines);
-  a question is under 10. As a budget for routine messages: status updates
-  under 100 words, questions and error reports under 150. When your draft
-  runs over, cut context before you cut the bottom line, the labeled
-  question, or the default action.
-- Budgets bound clutter, not information. Simpler, not necessarily
-  shorter: if the content genuinely needs more space to be clear, take the
-  space. A large report may run long, but every extra line must carry a
-  fact the reader needs, grouped as described above, and the first five
-  lines must still work standalone. Length from padding is a failure;
-  length from facts is not.
-- Do not dump logs, diffs, or full explanations unprompted. They bury the
-  bottom line and make the message feel like work to read. Instead, end
-  with one line listing what deeper detail is available on request
-  (e.g., "I can share the full error trace, the diff, or the test output").
-- If the human asks a follow-up, then go deeper, but only on what was asked.
+Read only the relevant example:
+- [Completion summary](examples/completion-summary.md)
+- [Error report](examples/error-report.md)
+- [Question and blocker](examples/question-blocker.md)
+- [Portuguese status update](examples/status-update-ptbr.md)
+- [Large operational report](examples/large-report.md)
 
-## Self-check before sending
+## Write durable records
 
-Reread the message as someone who just switched from a completely different
-task. In 15 seconds, can they tell (a) the state of things, (b) whether they
-need to act, and (c) exactly what to answer if so? If not, rewrite. Then do
-a Zinsser pass: cut every word that serves no function (in a padded draft
-that is often a third of them), check for em-dashes and codenames, and make
-sure facts sit in bullets, not buried in prose. Never cut a fact the reader
-needs to hit a length target; group facts under bold labels instead. The most
-common fixes: move the conclusion to the first sentence, turn the middle
-paragraph into 2-4 bullets, pull the question out into its own labeled line.
+Make the record intelligible outside the conversation. Include the subject,
+scope, relevant environment or version, observation period, and publication
+or update date when available and material. Distinguish event time from writing
+time. Resolve relative dates only from reliable context; otherwise mark them
+as unspecified. Include the timezone when it affects interpretation.
 
-## Examples
+Present the conclusion, supporting observations and sources, reasoning,
+assumptions, and limitations. For decisions, explain consequential alternatives
+and trade-offs. Include reproducible methods or evidence links when needed to
+assess the result. Do not leave essential evidence merely "available on request."
 
-**Status update (good):**
+Record unresolved work, known owners, and agreed dates when relevant. Never
+invent an owner, commitment, or deadline to fill a template. State what change
+or new evidence would justify reconsidering the recommendation.
 
-> Nightly sync is fixed and ran clean tonight.
->
-> - Cause: an expired security certificate had blocked it for 3 days.
-> - I caught up the 3-day backlog (41,000 records).
-> - 12 records had corrupted text and are set aside for review. I'll propose a fix tomorrow.
->
-> Nothing needed from you. I can share the full details on request.
+Preserve historical reports and decision context. Add dated corrections or
+addenda, or link to a superseding record. Do not silently rewrite a historical
+conclusion as if later knowledge had been available originally.
 
-**Question (good):**
+Read [Durable report](examples/durable-report.md) when writing a saved record.
 
-> The payment provider's test system is down, so I can't verify refunds end to end.
->
-> Options:
-> - Ship now, verify refunds when their test system is back. Fastest, small risk a refund bug reaches users.
-> - Hold the release until I can verify. Safest, delays launch about a day.
->
-> I recommend holding, because refund bugs cost real money to unwind.
->
-> **Question:** ship now or hold?
-> Default if I don't hear back by tomorrow morning: hold.
+## Write evergreen notes
 
-**Error report (bad → good):**
+Use one coherent idea per note, not an arbitrary size limit. Give it a title
+that states a useful claim or question. Explain the mechanism in your own words,
+when it applies, and exceptions. Separate durable principles from dated examples
+and measurements. Do not generalize one incident into a universal rule.
 
-Bad: "FileIngestGuard threw an UnhandledPromiseRejection in the S3
-multipart flow after the ETag mismatch retry loop exhausted, stack trace
-below (400 lines)..."
+Link to original evidence when available. Explain how related notes connect:
+supports, depends on, contradicts, or illustrates. Do not invent related notes
+or links. Prefer maintained canonical explanations over duplicate fragments.
 
-Good:
+Revise the explanation as understanding improves. Keep material changes and
+source context traceable using the destination's history or a dated note.
+Mark a superseded claim and point to its replacement when one exists.
 
-> File uploads over 100 MB are failing for users. Smaller uploads work.
->
-> - Started after yesterday's storage change: the step that verifies uploads now rejects large files.
-> - Fix is to roll back that change, about 30 minutes.
->
-> **Blocked on:** nothing. I'll roll back at 3pm unless you object.
-> Full error trace available on request.
+Read [Evergreen note](examples/evergreen-note.md) when capturing reusable knowledge.
+
+## Add references only when useful
+
+Use codes when the reader will discuss individual items, track dependencies,
+or revisit them across turns. The number of items alone is not a trigger.
+Skip codes for simple answers. Use this fixed vocabulary:
+
+| Code | Meaning |
+| --- | --- |
+| F1 | Finding or observation |
+| D1 | Decision, with proposed/accepted/rejected/superseded status as needed |
+| O1 | Option within a stated choice |
+| R1 | Risk, with uncertainty or conditions where material |
+| Q1 | Question |
+| A1 | Action, with pending/in progress/done/blocked status as needed |
+
+Keep item identity stable within its scope. Never renumber existing items to
+close gaps, reuse an identifier for a different item, or silently turn a proposal
+into an accepted decision. When context is missing, do not guess an earlier ID.
+For cross-document references, use a descriptive document ID plus item code,
+such as `sync-recovery/D1`. In the document itself, short codes are enough.
+
+Keep three dimensions distinct: document mode, item function, and evidence
+status. Mark evidence as verified, reported, inferred, or unverified only where
+it prevents confusion. Workflow status such as "accepted" or "done" is separate.
+Do not put three labels on every sentence. An ID is not proof or authorization.
+
+Read [Referenced review](examples/referenced-review.md) for a discussion example.
+
+## Review before sending
+
+- Can the reader understand the opening and any required action in 15 seconds?
+- Does the structure match the audience, destination, and useful lifetime?
+- Are material facts preserved, claims supported or qualified, and proposals
+  distinguishable from commitments and completed work?
+- For durable text, can a future reader interpret and assess it without the chat?
+- Are dates, evidence, limits, and review triggers present where they matter?
+- Are codes useful and stable, rather than decorative?
+- Can anything be cut without losing meaning or needed evidence?
+
+Perform this review silently. Do not append the checklist to the response.

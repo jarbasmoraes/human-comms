@@ -15,6 +15,8 @@ disappears.
 
 ## After
 
+Assume the rollback has already been authorized and the cause verified.
+
 > File uploads over 100 MB are failing for users. Smaller uploads work.
 >
 > - Started after yesterday's storage change: the step that verifies uploads now rejects large files.

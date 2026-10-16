@@ -10,17 +10,20 @@ set -euo pipefail
 RAW="https://raw.githubusercontent.com/jarbasmoraes/human-comms/main"
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-}")" 2>/dev/null && pwd || true)"
 
-# Resolve SKILL.md — local copy first, otherwise download (supports curl | bash)
+# Stage the complete skill before changing any installation.
+STAGING="$(mktemp -d)"
+trap 'rm -rf "$STAGING"' EXIT
 if [ -n "${SRC_DIR:-}" ] && [ -f "$SRC_DIR/SKILL.md" ]; then
-  SKILL="$SRC_DIR/SKILL.md"
-  CLEANUP=""
+  cp "$SRC_DIR/SKILL.md" "$STAGING/SKILL.md"
+  cp -R "$SRC_DIR/examples" "$STAGING/examples"
 else
-  SKILL="$(mktemp)"
-  CLEANUP="$SKILL"
-  echo "Downloading SKILL.md..."
-  curl -fsSL "$RAW/SKILL.md" -o "$SKILL"
+  echo "Downloading human-comms..."
+  curl -fsSL "$RAW/SKILL.md" -o "$STAGING/SKILL.md"
+  mkdir -p "$STAGING/examples"
+  for example in completion-summary error-report question-blocker status-update-ptbr large-report durable-report evergreen-note referenced-review; do
+    curl -fsSL "$RAW/examples/$example.md" -o "$STAGING/examples/$example.md"
+  done
 fi
-trap '[ -n "$CLEANUP" ] && rm -f "$CLEANUP" || true' EXIT
 
 ALL=0
 [ "${1:-}" = "--all" ] && ALL=1
@@ -33,7 +36,9 @@ want() { # $1=dir $2=binary
 
 install_skill() { # $1 = skills root
   mkdir -p "$1/human-comms"
-  cp "$SKILL" "$1/human-comms/SKILL.md"
+  cp "$STAGING/SKILL.md" "$1/human-comms/SKILL.md"
+  mkdir -p "$1/human-comms/examples"
+  cp "$STAGING/examples/"*.md "$1/human-comms/examples/"
 }
 
 INSTALLED=()
