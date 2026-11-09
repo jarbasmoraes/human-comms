@@ -1,6 +1,6 @@
 ---
 name: cold-read
-version: 0.2.0
+version: 2.0.0
 description: >-
   Write self-contained, timeless answers for a reader with zero context: a
   multitasking person switching in cold, or someone reading years later. A
