@@ -1,7 +1,7 @@
 name: release
 
 # Fully automatic: every push to main computes the next semver from
-# conventional commits, stamps SKILL.md, tags, and publishes a Release.
+# conventional commits, stamps every skills/*/SKILL.md, tags, and publishes a Release.
 # No release PR, no manual step.
 #
 # Bump rules (conventional commits since the last tag):
@@ -75,8 +75,8 @@ jobs:
           TAG="${{ steps.ver.outputs.tag }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          sed -i "s/^version: .*/version: ${NEXT}/" SKILL.md
-          git add SKILL.md
+          sed -i "s/^version: .*/version: ${NEXT}/" skills/*/SKILL.md
+          git add skills/*/SKILL.md
           git commit -m "chore(release): ${TAG}"
           git tag -a "$TAG" -m "Release ${TAG}"
           # Push the branch and the tag explicitly; --follow-tags only
