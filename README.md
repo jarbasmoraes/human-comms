@@ -2,9 +2,14 @@
 
 [![skills.sh](https://skills.sh/b/jarbasmoraes/human-comms)](https://skills.sh/jarbasmoraes/human-comms)
 
-An agent skill for clear messages, durable reports, and evergreen notes.
+Agent skills for clear messages, durable reports, and evergreen notes.
 Make the opening understandable in 15 seconds while preserving the context,
 evidence, and reasoning that future readers need.
+
+| Skill | Use it for |
+| --- | --- |
+| [`human-comms`](./skills/human-comms/SKILL.md) | Every message, report and note people will read |
+| [`cold-read`](./skills/cold-read/SKILL.md) | A variant for a reader with zero context: someone switching in cold, or reading years later. It names every subject, uses absolute dates and stable identifiers, and removes references to the conversation. |
 
 ## The rules, in short
 
@@ -61,7 +66,7 @@ approved decision, and silence does not grant permission.
 ## Install
 
 **One-liner** — detects which agent CLIs you have (Claude Code, Pi, Codex,
-opencode, Hermes) and installs into each:
+opencode, Hermes) and installs both skills into each:
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/jarbasmoraes/human-comms/main/install.sh)
@@ -74,35 +79,29 @@ Alternatively, use the [skills](https://github.com/vercel-labs/skills) CLI, whic
 agent and puts the files in the right place:
 
 ```bash
-npx skills add jarbasmoraes/human-comms
+npx skills add jarbasmoraes/human-comms --skill human-comms --skill cold-read
 ```
 
-Add `-g` to install globally instead of into the current project.
+Add `-g` to install globally instead of into the current project. Drop a
+`--skill` to install only one.
+
+**Upgrading from 1.x:** the skills moved from the repository root to
+`skills/<name>/`. Remove the old install and add it again; `npx skills update`
+and a root clone will not find the old path.
 
 ### Manual
 
-Or clone into your agent's skills directory.
-
-**Claude Code (all projects):**
-
-```bash
-git clone https://github.com/jarbasmoraes/human-comms.git ~/.claude/skills/human-comms
-```
-
-**Claude Code (one project):**
+Clone the repository once and copy each skill folder into your agent's skills
+directory, for example Claude Code (all projects):
 
 ```bash
-git clone https://github.com/jarbasmoraes/human-comms.git .claude/skills/human-comms
+git clone https://github.com/jarbasmoraes/human-comms.git /tmp/human-comms
+cp -R /tmp/human-comms/skills/human-comms /tmp/human-comms/skills/cold-read ~/.claude/skills/
 ```
 
-**Pi:**
-
-```bash
-git clone https://github.com/jarbasmoraes/human-comms.git ~/.pi/agent/skills/human-comms
-```
-
-The directory name must be `human-comms` to match the `name` field in
-`SKILL.md`. Restart your agent session to pick it up.
+For one project use `.claude/skills/`; for Pi use `~/.pi/agent/skills/`. Each
+directory name must match the `name` field in its `SKILL.md`. Restart your agent
+session to pick them up.
 
 ## Use
 
@@ -119,9 +118,10 @@ stay simple. Technical terminology follows the audience, and material facts
 survive editing. Reports retain evidence; historical conclusions receive dated
 corrections. Evergreen explanations evolve as understanding improves.
 
-The core protocol is in [`SKILL.md`](./SKILL.md). Examples in [`examples/`](./examples)
-are loaded only when relevant. The shell installer copies both the core and examples.
-The existing release workflow manages the version field automatically.
+The core protocol is in [`skills/human-comms/SKILL.md`](./skills/human-comms/SKILL.md).
+Each skill's `examples/` are loaded only when relevant. The shell installer copies
+both skills with their examples. The release workflow stamps one version into
+both `SKILL.md` files.
 
 ## Compatibility
 
